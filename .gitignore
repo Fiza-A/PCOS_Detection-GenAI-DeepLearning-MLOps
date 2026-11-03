@@ -1,0 +1,51 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+*.pem
+*.key
+
+# Original, processed, and synthetic PCOS records
+GENAI/data/raw/
+GENAI/data/processed/
+GENAI/data/synthetic/
+DEEP_LEARNING/data/real/
+DEEP_LEARNING/data/processed/
+DEEP_LEARNING/data/synthetic/
+
+# Trained models, fitted transformers, and serialized synthesizers
+GENAI/models/
+DEEP_LEARNING/models/
+*.pt
+*.pth
+*.joblib
+*.pkl
+*.pickle
+*.npy
+
+# Generated evaluation, explainability, and operational reports
+GENAI/reports/
+DEEP_LEARNING/reports/
+MLOPS/reports/
+
+# Generated MLOPS state and operational logs
+MLOPS/data_versioning/datasets/
+MLOPS/experiment_tracking/runs/
+MLOPS/model_registry/registry.json
+MLOPS/model_registry/versions/
+MLOPS/logs/
+
+# Editor/OS noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

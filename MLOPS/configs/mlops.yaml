@@ -1,0 +1,39 @@
+schema_version: 1
+experiment_name: PCOS-MLOps-Real-Only-DLNN
+
+# Approved provisional project-level engineering policies for this academic project.
+# These values are not clinical standards or externally validated medical criteria.
+quality_gate:
+  metric_source: DEEP_LEARNING/reports/test_evaluation.json
+  minimum_accuracy: 0.75
+  minimum_precision: 0.70
+  minimum_recall: 0.80
+  minimum_f1: 0.72
+  minimum_roc_auc: 0.85
+
+registry:
+  register_only_on_quality_gate_pass: true
+  deploy_automatically: false
+
+artifacts:
+  raw_dataset: GENAI/data/raw/PCOS_data.csv
+  split_metadata: GENAI/data/processed/split_metadata.json
+  train_partition: GENAI/data/processed/train.csv
+  validation_partition: GENAI/data/processed/validation.csv
+  test_partition: GENAI/data/processed/test.csv
+  X_train: DEEP_LEARNING/data/processed/X_train.npy
+  y_train: DEEP_LEARNING/data/processed/y_train.npy
+  X_validation: DEEP_LEARNING/data/processed/X_validation.npy
+  y_validation: DEEP_LEARNING/data/processed/y_validation.npy
+  X_test: DEEP_LEARNING/data/processed/X_test.npy
+  y_test: DEEP_LEARNING/data/processed/y_test.npy
+  preprocessor: DEEP_LEARNING/models/preprocessing_pipeline.joblib
+  preprocessing_report: DEEP_LEARNING/reports/preprocessing_report.json
+  transformed_feature_names: DEEP_LEARNING/reports/transformed_feature_names.json
+  checkpoint: DEEP_LEARNING/models/dl_baseline_best.pt
+  training_config: DEEP_LEARNING/reports/training_config.json
+  training_summary: DEEP_LEARNING/reports/training_summary.json
+  training_history: DEEP_LEARNING/reports/training_history.csv
+  test_evaluation: DEEP_LEARNING/reports/test_evaluation.json
+  test_predictions: DEEP_LEARNING/reports/test_predictions.csv
+

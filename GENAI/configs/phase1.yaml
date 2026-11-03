@@ -1,0 +1,13 @@
+python_version: "3.11"
+random_seed: 42
+dataset_path: "GENAI/data/raw/PCOS_data.csv"
+target_column: "PCOS (Y/N)"
+split_ratios:
+  train: 0.70
+  validation: 0.15
+  test: 0.15
+expected_schema:
+  rows: 541
+  columns: 45
+split_indices_created: false
+audit_only: true

@@ -1,0 +1,7 @@
+pandas==2.3.3
+numpy==2.4.6
+scipy==1.17.1
+scikit-learn==1.9.1
+sdv==1.38.5
+torch==2.15.0
+PyYAML==6.0.3

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PCOS-MLOps — Deep Learning Prediction</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="header-inner">
+      <div class="brand-mark" aria-hidden="true">P</div>
+      <div class="header-copy">
+        <p class="eyebrow">ACADEMIC MODEL DEMONSTRATION</p>
+        <h1>PCOS-MLOps <span>— Deep Learning Prediction</span></h1>
+        <p class="header-subtitle">Real-only DLNN baseline</p>
+      </div>
+      <div class="header-badge"><span class="status-dot" aria-hidden="true"></span>AI Research</div>
+    </div>
+  </header>
+  <main class="layout">
+    <section class="intro">
+      <div><p class="eyebrow">FROZEN MODEL · LOCAL INFERENCE</p><h2>Prediction input</h2></div>
+      <p>Enter the source features used by the project model. Blank values use the existing fitted training imputer.</p>
+    </section>
+    <div id="load-error" class="notice error" hidden></div>
+    <form id="prediction-form" novalidate>
+      <div id="form-sections"></div>
+      <p class="form-note">Use the categories shown in the controls. Leave a field blank only when its value is unavailable; the existing fitted imputer will handle it.</p>
+      <div id="validation-errors" class="notice error" hidden role="alert"></div>
+      <button id="predict-button" type="submit" disabled>Predict PCOS <span aria-hidden="true">→</span></button>
+    </form>
+    <section id="result" class="result-card" hidden aria-live="polite"></section>
+    <section class="info-grid">
+      <article class="info-card model-card">
+        <div class="card-heading"><span class="card-icon" aria-hidden="true">M</span><div><p class="eyebrow">FROZEN CHECKPOINT</p><h3>Model information</h3></div></div>
+        <dl><div><dt>Model</dt><dd>DLNN / MLP</dd></div><div><dt>Input features</dt><dd>58 transformed features</dd></div><div><dt>Architecture</dt><dd>58 → 128 → 64 → 32 → 1</dd></div><div><dt>Regularization</dt><dd>BatchNorm + Dropout</dd></div><div><dt>Optimizer</dt><dd>Adam</dd></div><div><dt>Threshold</dt><dd id="threshold-info">Loading…</dd></div></dl>
+      </article>
+      <details class="info-card process-card">
+        <summary><span class="card-icon" aria-hidden="true">↗</span><span><span class="eyebrow">INFERENCE FLOW</span><strong>How the prediction works</strong></span></summary>
+        <p class="process-intro">The dashboard applies the saved input pipeline and frozen network in sequence.</p>
+        <ol><li>The entered source features are checked.</li><li>The existing fitted preprocessing pipeline converts them into 58 numeric model features.</li><li>The frozen DLNN produces a probability.</li><li>The project’s fixed 0.50 threshold determines the displayed class.</li></ol>
+      </details>
+    </section>
+    <p class="disclaimer"><span aria-hidden="true">ⓘ</span> This is an academic prototype for model demonstration and is not a clinical diagnosis.</p>
+  </main>
+  <footer>PCOS-MLOps · Local inference using the frozen REAL_ONLY_BASELINE checkpoint</footer>
+</body>
+</html>

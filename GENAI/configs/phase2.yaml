@@ -1,0 +1,18 @@
+random_seed: 42
+target_column: "PCOS (Y/N)"
+identifier_columns: ["Sl. No", "Patient File No."]
+excluded_columns: ["Unnamed: 44"]
+split:
+  train: 0.70
+  validation: 0.15
+  test: 0.15
+synthetic_rows: 378
+sdv:
+  epochs: 300
+  batch_size: 100
+  pac: 10
+  cuda: false
+quality_gate:
+  technical_validity_rate_min: 1.0
+  statistical_thresholds: null
+  note: "No arbitrary fidelity/privacy thresholds; without a justified approved policy status remains REVIEW_REQUIRED."
