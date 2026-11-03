@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  artifact-independent-tests:
+    name: Artifact-independent tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install CPU-only PyTorch for architecture tests
+        run: python -m pip install --disable-pip-version-check --index-url https://download.pytorch.org/whl/cpu "torch==2.15.0"
+
+      - name: Report artifact-dependent suites skipped
+        run: |
+          echo "::notice::Skipped DEEP_LEARNING/tests/test_model.py::test_02_input_dimension_is_58; it requires the ignored preprocessing_report.json."
+          echo "::notice::Skipped DEEP_LEARNING tests for evaluation, explainability, preprocessing, and training; they require ignored PCOS data, transformed arrays, checkpoint/preprocessor, evaluation, or SHAP artifacts."
+          echo "::notice::Skipped DEEP_LEARNING/dashboard/test_dashboard.py; it requires the ignored checkpoint, preprocessor, and data artifacts."
+          echo "::notice::Skipped all GENAI tests; they require the ignored raw dataset, partitions, generator artifacts, or evaluation reports."
+          echo "::notice::Skipped MLOPS/tests/test_mlops.py; its class setup reads the ignored DEEP_LEARNING/reports/test_evaluation.json artifact."
+          echo "::notice::The full local Deep Learning suite has a known SHAP integrity hash mismatch for test_evaluation.json; artifact-dependent evaluation and SHAP suites are not run in this artifact-free CI job."
+
+      - name: Run artifact-independent DLNN architecture tests
+        run: |
+          python -m unittest -v \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_01_model_instantiates \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_03_hidden_dimensions_are_128_64_32 \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_04_dropout_rates_are_configured \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_05_output_dimension_is_one \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_06_forward_accepts_batch_by_58_input \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_07_forward_output_shape \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_08_forward_output_is_finite \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_09_bce_with_logits_accepts_output \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_10_sigmoid_probability_conversion_is_bounded \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_11_same_seed_reproduces_initial_parameters \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_12_layer_structure_and_parameter_count \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_config_is_the_single_architecture_source \
+            DEEP_LEARNING.tests.test_model.PCOSDLNNArchitectureTests.test_model_rejects_wrong_feature_width
